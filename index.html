@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALCULATOR LOGIC WITH JAVASCRIPT</title>
+    <style>
+        body{
+            background-color: #000000;
+        }
+        #result {
+            padding: 1rem .8rem;
+            background-color: #9DB2BF;
+            color: rgb(0, 0, 0);
+            text-align: right;
+            width: 93%;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            border: double;
+            
+        }
+        input {
+            background-color: #DDE6ED;
+            height: 100%;
+            width: 100%;
+            padding: 1rem;
+            font-size: xx-large;    
+            text-align: center;
+            cursor: pointer;
+            border-radius: 1rem;
+            font-weight:bold; 
+            font-family: system-ui, '-apple-system', 'BlinkMacSystemFont';
+            
+        }
+
+        table{
+            background-color: #27374D;
+            border-radius: 1rem;
+            padding: 1rem;
+            width: 65vh;
+            height: auto;
+            border-style:  double;
+        }
+        main{
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            
+
+        }
+        .num-btn:hover{
+            background-color: #d4e7f5;
+            transform: scale(1.05);
+        }
+        .num-btn1:hover{
+            background-color: #9DB2BF;
+            transform: scale(1.05);
+        }
+        .num-btn2:hover{
+            background-color:#9DB2BF;
+            transform: scale(1.05);
+        }
+
+        .symboll:hover{
+            background-color: #9DB2BF;
+            transform: scale(1.05);
+        }
+
+        .titles{
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            padding-bottom: 2rem;
+            color: rgb(245, 245, 245);
+            font-size: xxx-large;
+            margin: .5rem;
+            text-align: center
+            
+        }
+
+        @media (max-width: 800px) {
+            body {
+                background-color: #B3C8CF;
+            }
+            table{
+                width: 50%;
+                height: 50%;
+                padding-right: 1.5rem;
+            }
+            .num-btn {
+                font-size: 1.2rem;
+                padding: 15px;
+            }
+           
+            .symboll{
+                font-size: 1.2rem;
+                padding: 15px;
+            }
+            }
+            .result {
+                height: 50px;
+                font-size: 1.5rem;
+                
+            }
+            .num-btn1{
+                background-color: #526D82;
+                justify-content: center;
+            }
+            .num-btn2{
+                display: flex;
+                flex-direction: column;        
+                align-items: center;
+                background-color: #526D82;
+                border-radius: 1rem; 
+                padding-bottom: 15px;
+                padding-top: 13px;
+                border: 1px solid (black);
+            }
+            
+    </style>
+</head>
+<body>
+    <main>
+    <table >
+        <tr>
+            <td>
+                <tr>
+                    <td colspan="4" class="titles">Calculator App</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><input type="text" id="result"></td>
+                    
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="button" value="Del" onclick="deleteNumber()" class="num-btn"></td>
+                    <td button onclick="clearInput()" class="num-btn2"></button>
+                        <img src="https://img.icons8.com/fluency-systems-regular/48/clear-symbol.png" alt="Clear"></button></td>
+                    <td><input  type="button" value="%" onclick="calculatePercentage()" class="num-btn1"></td>
+                    
+                </tr>
+                <tr>
+                    <td><input type="button" value="1" onclick="appendNumber(1)" class="num-btn"></td>
+                    <td><input type="button" value="2" onclick="appendNumber(2)" class="num-btn"></td>
+                    <td><input type="button" value="3" onclick="appendNumber(3)" class="num-btn"></td>
+                    <td><input type="button" value="/" onclick="divide()" class="num-btn1"></td>
+                    <tr>
+                        <td><input type="button" value="4" onclick="appendNumber(4)" class="num-btn"></td>
+                        <td><input type="button" value="5" onclick="appendNumber(5)" class="num-btn"></td>
+                        <td><input type="button" value="6" onclick="appendNumber(6)" class="num-btn"></td>
+                        <td><input  type="button" value="x" onclick="multiply()" class="num-btn1"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" value="7" onclick="appendNumber(7)" class="num-btn"></td>
+                        <td><input type="button" value="8" onclick="appendNumber(8)" class="num-btn"></td>
+                        <td><input type="button" value="9" onclick="appendNumber(9)" class="num-btn"></td>
+                        <td><input  type="button" value="-" onclick="minus()" class="num-btn1"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" value="." onclick="decimal()" class="symboll"></td>
+                        <td><input type="button" value="0" onclick="appendNumber(0)" class="num-btn"></td>
+                        <td><input  type="button" value="=" onclick="equals()" class="num-btn2"></td>
+                        <td><input  type="button" value="+" onclick="add()" class="num-btn1"></td>
+                        
+                    </tr>
+                    
+                </tr>
+            </td>   
+        </tr>
+
+
+    </table>
+</main>
+
+    <br>
+    <script>
+        let currentInput='';
+        let currenOperator= '';
+
+        function appendNumber(number) {
+            currentInput += number; 
+            document.getElementById('result').value = currentInput;
+            document.getElementById("result").selectionStart = document.getElementById("result").selectionEnd.length;
+            
+        }
+
+        function add() {
+            currenOperator = "+";
+            currentInput += currenOperator; 
+            document.getElementById('result').value = currentInput;
+        }
+
+        function equals() {
+            const result = eval(currentInput);
+            document.getElementById('result').value = result;
+           currentInput = result.toString();
+           currenOperator = '';
+        }
+
+        function clearInput() {
+            currentInput='';
+            currenOperator = '';
+            document.getElementById('result').value = '';
+            }
+
+        function divide() {
+            currenOperator = "/";
+            currentInput += currenOperator; 
+            document.getElementById('result').value = currentInput;
+        }
+
+        function minus() {
+            currenOperator = "-";
+            currentInput += currenOperator; 
+            document.getElementById('result').value = currentInput;
+        }
+
+        function multiply() {
+            currenOperator = "*";
+            currentInput += currenOperator; 
+            document.getElementById('result').value = currentInput;
+        }
+
+        function decimal() {
+            currenOperator = ".";
+            currentInput += currenOperator; 
+            document.getElementById('result').value = currentInput;
+        }
+
+        function deleteNumber() {
+            currentInput = currentInput.slice(0, -1);
+            document.getElementById('result').value = currentInput;
+        }
+
+        function calculatePercentage() {
+            if (currentInput !== '') {
+                const currentNumber = parseFloat(currentInput);
+                const percentage = currentNumber / 100;
+                currentInput = percentage.toString();
+                document.getElementById('result').value = currentInput;
+            }
+        }
+    </script>
+
+</body>
+</html>
